@@ -1,0 +1,94 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # ================================================
+  # Universal configuration items.
+  # IMPORTANT: Change these.
+  # ================================================
+
+  # What extension to use. Should be initials.dsdev.
+  server_extension = '.dev'
+
+  # Choose a different password. Use https://www.grc.com/passwords.htm
+  # and select from the alpha-numeric category (mysql doesn't always
+  # play well with non-alpha-numeric passwords)
+  mysql_password = 'blahblahblah'
+
+  # Point this at your local copy of chef-dev-cookbooks.
+  chef_base_path = "/path/to/epocsquadron/chef-dev-cookbooks/"
+
+  # Miscellany
+  config.vm.hostname = "dev"
+  config.ssh.username = "vagrant"
+  config.vm.synced_folder ".", "/var/www/", :nfs => true, id: "vagrant-root"
+
+  # ================================================
+  # Apache + PHP (current) Node
+  # ================================================
+  config.vm.define :php_current do |php_current|
+
+    php_current_ip = '192.168.33.100'
+
+    php_current.vm.box = "quantal64-current"
+    php_current.vm.network :private_network, ip: php_current_ip
+
+    config.vm.provision :chef_solo do |chef|
+
+      # Grab cookbooks from a tarball on github.
+      # chef.recipe_url = "http://cloud.github.com/downloads/EpocSquadron/chef-dev-cookbooks/chef-solo-2012-12-11.tar.gz"
+      # For dev:
+      chef.cookbooks_path = File.join(chef_base_path, "cookbooks")
+      chef.roles_path = File.join(chef_base_path, "roles")
+
+      # Additional last-minute configuration
+      chef.json = {
+        :'dynamic-vhosts' => {
+          :server_extension => server_extension
+        }
+      }
+
+      # Run jobs to make this into a web server.
+      chef.add_role "web_server_dev_current"
+
+    end
+
+  end
+
+  # ================================================
+  # Mysql Node (To be used by all web server boxes)
+  # ================================================
+  config.vm.define :mysql do |mysql|
+
+    mysql_ip = '192.168.33.101'
+
+    mysql.vm.box = "quantal64-current"
+    mysql.vm.network :private_network, ip: mysql_ip
+
+    config.vm.provision :chef_solo do |chef|
+
+      # Grab cookbooks from a tarball on github.
+      # chef.recipe_url = "http://cloud.github.com/downloads/EpocSquadron/chef-dev-cookbooks/chef-solo-2012-12-11.tar.gz"
+      # For dev:
+      chef.cookbooks_path = File.join(chef_base_path, "cookbooks")
+      chef.roles_path = File.join(chef_base_path, "roles")
+
+      # Data bag for configuring attributes for this node.
+      chef.json = {
+        :mysql => {
+          :server_root_password => mysql_password,
+          :server_repl_password => mysql_password,
+          :server_debian_password => mysql_password,
+          :bind_address => mysql_ip
+        }
+      }
+
+      chef.add_role "mysql_dev_server"
+      chef.add_recipe "dynamic-vhosts::mysql"
+
+    end
+
+  end
+
+end
