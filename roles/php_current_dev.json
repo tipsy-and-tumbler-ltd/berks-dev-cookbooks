@@ -1,0 +1,12 @@
+{
+  "name": "php_current_dev",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for development apache-php servers (current version of php)",
+  "run_list": [
+    "recipe[openssl]",
+    "recipe[chef-php-extra::development]",
+    "recipe[php::module_curl]",
+    "recipe[chef-php-extra::module_mysql]"
+  ]
+}

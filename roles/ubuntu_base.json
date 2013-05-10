@@ -1,0 +1,12 @@
+{
+  "name": "ubuntu_base",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for ubuntu servers.",
+  "run_list": [
+    "recipe[apt]",
+    "recipe[networking_basic]",
+    "recipe[ntp]",
+    "recipe[vim]"
+  ]
+}

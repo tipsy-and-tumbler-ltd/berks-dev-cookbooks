@@ -1,0 +1,13 @@
+{
+  "name": "php_current_dev",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for development apache-php servers (current version of php)",
+  "run_list": [
+    "role[ubuntu_base]",
+    "role[php_current_dev]",
+    "role[apache_with_php]",
+    "recipe[chef-dynamic-vhost]",
+    "recipe[git]"
+  ]
+}

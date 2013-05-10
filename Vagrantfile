@@ -20,14 +20,15 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "Berks-berkshelf"
+  config.vm.hostname = server_extension
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
+  #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
+  config.vm.box = "quantal64-current"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
+  #config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
@@ -96,6 +97,6 @@ Vagrant.configure("2") do |config|
     }
 
     # Run jobs to make this into a web server.
-    chef.add_role "web_server_dev_current"
+    chef.add_role "ds_dev_server"
   end
 end
