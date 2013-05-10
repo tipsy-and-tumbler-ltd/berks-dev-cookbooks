@@ -2,6 +2,20 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+
+  # ================================================
+  # Universal configuration items.
+  # IMPORTANT: Change these.
+  # ================================================
+
+  # What extension to use. Should be initials.dsdev.
+  server_extension = 'dp.dsdev'
+
+  # Choose a different password. Use https://www.grc.com/passwords.htm
+  # and select from the alpha-numeric category (mysql doesn't always
+  # play well with non-alpha-numeric passwords)
+  mysql_password = 'blahblahblah'
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -71,16 +85,17 @@ Vagrant.configure("2") do |config|
   # config.berkshelf.except = []
 
   config.vm.provision :chef_solo do |chef|
+
+    chef.roles_path = './roles'
+
+    # Additional last-minute configuration
     chef.json = {
-      :mysql => {
-        :server_root_password => 'rootpass',
-        :server_debian_password => 'debpass',
-        :server_repl_password => 'replpass'
+      :'dynamic-vhosts' => {
+        :server_extension => server_extension
       }
     }
 
-    chef.run_list = [
-        "recipe[Berks::default]"
-    ]
+    # Run jobs to make this into a web server.
+    chef.add_role "web_server_dev_current"
   end
 end
