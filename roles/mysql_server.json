@@ -1,0 +1,23 @@
+{
+  "name": "mysql_dev_server",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for systems that serve HTTP traffic",
+  "run_list": [
+    "recipe[mysql]",
+    "recipe[mysql::server]",
+    "recipe[database::mysql]"
+  ],
+  "override_attributes": {
+    "mysql": {
+      "client": {
+        "packages": [
+          "build-essential",
+          "mysql-client",
+          "libmysqlclient-dev",
+          "ruby-dev"
+        ]
+      }
+    }
+  }
+}

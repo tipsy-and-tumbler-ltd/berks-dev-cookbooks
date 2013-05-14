@@ -108,5 +108,50 @@ Vagrant.configure("2") do |config|
 
   end
 
+  # Global dev mysql server, so we can destroy
+  # the web servers without losing dbs, and so
+  # we can share the same dbs across different
+  # web servers (eg for testing on nginx or
+  # different versions of php)
+  config.vm.define :mysql do |mysql|
+
+    standarddev.vm.hostname = server_extension + '-mysql'
+
+    mysql_ip = '33.33.33.11'
+
+    # Every Vagrant virtual environment requires a box to build off of.
+    #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
+    mysql.vm.box = "quantal64-current"
+
+    # Assign this VM to a host-only network IP, allowing you to access it
+    # via the IP. Host-only networks can talk to the host machine as well as
+    # any other machines on the same network, but cannot be accessed (through this
+    # network interface) by any external networks.
+    mysql.vm.network :private_network, ip: mysql_ip
+
+    # Choose a different password. Use https://www.grc.com/passwords.htm
+    # and select from the alpha-numeric category (mysql doesn't always
+    # play well with non-alpha-numeric passwords)
+    mysql_password = 'blahblahblah'
+
+    config.vm.provision :chef_solo do |chef|
+
+      chef.roles_path = './roles'
+
+      # Data bag for configuring attributes for this node.
+      chef.json = {
+        :mysql => {
+          :server_root_password => mysql_password,
+          :server_repl_password => mysql_password,
+          :server_debian_password => mysql_password,
+          :bind_address => mysql_ip
+        }
+      }
+
+      chef.add_role "ds_mysql_server"
+
+    end
+
+  end
 
 end

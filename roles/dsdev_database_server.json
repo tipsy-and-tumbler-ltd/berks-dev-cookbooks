@@ -1,0 +1,23 @@
+{
+  "name": "dsdev_database_server",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "description": "The base role for development database server.",
+  "run_list": [
+    "role[ubuntu_base]",
+    "role[mysql_server]",
+    "role[mongo_server]"
+  ],
+  "override_attributes": {
+    "mysql": {
+      "client": {
+        "packages": [
+          "build-essential",
+          "mysql-client",
+          "libmysqlclient-dev",
+          "ruby-dev"
+        ]
+      }
+    }
+  }
+}
