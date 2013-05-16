@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
 
       # Additional last-minute configuration
       chef.json = {
-          :'dynamic-vhosts' => {
+        :'dynamic-vhosts' => {
           :server_extension => developer_initials + '.' + server_extension
         }
       }
@@ -146,6 +146,9 @@ Vagrant.configure("2") do |config|
           :password => {
             :postgres => db_password
           }
+        },
+        :'chef-dsdev-database' => {
+          :host_range => '33.33.33.%'
         }
       }
 

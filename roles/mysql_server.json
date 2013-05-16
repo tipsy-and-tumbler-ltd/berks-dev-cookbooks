@@ -6,7 +6,8 @@
   "run_list": [
     "recipe[mysql]",
     "recipe[mysql::server]",
-    "recipe[database::mysql]"
+    "recipe[database::mysql]",
+    "recipe[chef-dsdev-database::mysql_remote_access]"
   ],
   "override_attributes": {
     "mysql": {
