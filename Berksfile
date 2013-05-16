@@ -1,11 +1,13 @@
 site :opscode
 
-cookbook "apache2"
-cookbook "database"
+cookbook "timezone-ii"
 cookbook "ntp"
-cookbook "vim"
 cookbook "networking_basic"
+cookbook "vim"
 cookbook "php"
+cookbook "apache2"
+cookbook "nginx"
+cookbook "database"
 cookbook "mongodb"
 # cookbook "chef-php-extra", git: 'git://github.com/inviqa/chef-php-extra.git'
 # cookbook "chef-dynamic-vhost", git: 'git@github.com:EpocSquadron/chef-dynamic-vhost.git'
