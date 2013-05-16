@@ -71,22 +71,22 @@ Vagrant.configure("2") do |config|
   # config.berkshelf.except = []
 
   # Standard development machine, linux, apache2, php5.4
-  config.vm.define :standarddev do |standarddev|
+  config.vm.define :dsdev do |dsdev|
 
     server_extension = 'dsdev'
-    standarddev.vm.hostname = server_extension
+    dsdev.vm.hostname = server_extension
 
     # Every Vagrant virtual environment requires a box to build off of.
     #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
-    standarddev.vm.box = "quantal64-current"
+    dsdev.vm.box = "quantal64-current"
 
     # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    standarddev.vm.network :private_network, ip: "33.33.33.10"
+    dsdev.vm.network :private_network, ip: "33.33.33.10"
 
-    standarddev.vm.provision :chef_solo do |chef|
+    dsdev.vm.provision :chef_solo do |chef|
 
       chef.roles_path = './roles'
 
