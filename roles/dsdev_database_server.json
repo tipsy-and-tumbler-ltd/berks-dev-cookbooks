@@ -6,18 +6,7 @@
   "run_list": [
     "role[ubuntu_base]",
     "role[mysql_server]",
-    "role[mongo_server]"
-  ],
-  "override_attributes": {
-    "mysql": {
-      "client": {
-        "packages": [
-          "build-essential",
-          "mysql-client",
-          "libmysqlclient-dev",
-          "ruby-dev"
-        ]
-      }
-    }
-  }
+    "role[mongo_server]",
+    "role[postgresql_server]"
+  ]
 }

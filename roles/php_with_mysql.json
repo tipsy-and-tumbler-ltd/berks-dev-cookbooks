@@ -1,9 +1,10 @@
 {
-  "name": "apache_with_php",
+  "name": "php_with_mysql",
   "chef_type": "role",
   "json_class": "Chef::Role",
   "description": "The base role for development apache-php servers (current version of php)",
   "run_list": [
-    "recipe[apache2::mod_php5]"
+    "recipe[mysql::client]",
+    "recipe[php::module_mysql]"
   ]
 }

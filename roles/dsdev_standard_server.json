@@ -6,6 +6,9 @@
   "run_list": [
     "role[ubuntu_base]",
     "role[php_current_dev]",
+    "role[php_with_mysql]",
+    "role[php_with_postgresql]",
+    "role[apache_server]",
     "role[apache_with_php]",
     "recipe[chef-dynamic-vhost]",
     "recipe[git]"

@@ -4,7 +4,9 @@
   "json_class": "Chef::Role",
   "description": "The base role for systems that serve HTTP traffic",
   "run_list": [
-    "recipe[mongodb::10gen_repo]",
-    "recipe[mongodb]"
+    "recipe[postgresql]",
+    "recipe[postgresql::server]",
+    "recipe[postgresql::config_initdb]",
+    "recipe[database::postgresql]"
   ]
 }
