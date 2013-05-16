@@ -9,12 +9,7 @@ Vagrant.configure("2") do |config|
   # ================================================
 
   # What extension to use. Should be initials.dsdev.
-  server_extension = 'dp.dsdev'
-
-  # Choose a different password. Use https://www.grc.com/passwords.htm
-  # and select from the alpha-numeric category (mysql doesn't always
-  # play well with non-alpha-numeric passwords)
-  mysql_password = 'blahblahblah'
+  developer_initials = 'dp'
 
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -78,7 +73,8 @@ Vagrant.configure("2") do |config|
   # Standard development machine, linux, apache2, php5.4
   config.vm.define :standarddev do |standarddev|
 
-    standarddev.vm.hostname = server_extension + '-standarddev'
+    server_extension = 'dsdev'
+    standarddev.vm.hostname = server_extension
 
     # Every Vagrant virtual environment requires a box to build off of.
     #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
@@ -97,12 +93,12 @@ Vagrant.configure("2") do |config|
       # Additional last-minute configuration
       chef.json = {
           :'dynamic-vhosts' => {
-          :server_extension => server_extension
+          :server_extension => developer_initials + '.' + server_extension
         }
       }
 
       # Run jobs to make this into a web server.
-      chef.add_role "ds_dev_server"
+      chef.add_role "dsdev_standard_server"
 
     end
 
@@ -113,42 +109,47 @@ Vagrant.configure("2") do |config|
   # we can share the same dbs across different
   # web servers (eg for testing on nginx or
   # different versions of php)
-  config.vm.define :mysql do |mysql|
+  config.vm.define :dbdev do |dbdev|
 
-    standarddev.vm.hostname = server_extension + '-mysql'
-
-    mysql_ip = '33.33.33.11'
+    server_extension = 'dbdev'
+    dbdev.vm.hostname = server_extension
+    dbdev_ip = '33.33.33.40'
 
     # Every Vagrant virtual environment requires a box to build off of.
     #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
-    mysql.vm.box = "quantal64-current"
+    dbdev.vm.box = "quantal64-current"
 
     # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    mysql.vm.network :private_network, ip: mysql_ip
+    dbdev.vm.network :private_network, ip: dbdev_ip
 
     # Choose a different password. Use https://www.grc.com/passwords.htm
     # and select from the alpha-numeric category (mysql doesn't always
     # play well with non-alpha-numeric passwords)
-    mysql_password = 'blahblahblah'
+    db_password = 'blahblahblah'
 
-    config.vm.provision :chef_solo do |chef|
+    dbdev.vm.provision :chef_solo do |chef|
 
       chef.roles_path = './roles'
 
       # Data bag for configuring attributes for this node.
       chef.json = {
         :mysql => {
-          :server_root_password => mysql_password,
-          :server_repl_password => mysql_password,
-          :server_debian_password => mysql_password,
-          :bind_address => mysql_ip
+          :server_root_password => db_password,
+          :server_repl_password => db_password,
+          :server_debian_password => db_password,
+          :bind_address => dbdev_ip
+        },
+        :postgresql => {
+          :password => {
+            :postgres => db_password
+          }
         }
       }
 
-      chef.add_role "ds_mysql_server"
+      chef.add_role "dsdev_database_server"
 
     end
 
