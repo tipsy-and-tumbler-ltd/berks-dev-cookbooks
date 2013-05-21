@@ -1,9 +1,0 @@
-{
-  "name": "apache_with_php",
-  "chef_type": "role",
-  "json_class": "Chef::Role",
-  "description": "The base role for development apache-php servers (current version of php)",
-  "run_list": [
-    "recipe[apache2::mod_php5]"
-  ]
-}
