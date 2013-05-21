@@ -1,8 +1,9 @@
 site :opscode
 
+cookbook "networking_basic"
 cookbook "timezone-ii"
 cookbook "ntp"
-cookbook "networking_basic"
+cookbook "fail2ban"
 cookbook "vim"
 cookbook "php"
 cookbook "apache2"
