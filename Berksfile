@@ -1,6 +1,7 @@
 site :opscode
 
 cookbook "networking_basic"
+cookbook "simple_iptables"
 cookbook "timezone-ii"
 cookbook "ntp"
 cookbook "fail2ban"
