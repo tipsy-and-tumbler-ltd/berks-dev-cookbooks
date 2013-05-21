@@ -88,8 +88,6 @@ Vagrant.configure("2") do |config|
 
     dsdev.vm.provision :chef_solo do |chef|
 
-      chef.roles_path = './roles'
-
       # Additional last-minute configuration
       chef.json = {
         :'dynamic-vhosts' => {
@@ -98,7 +96,7 @@ Vagrant.configure("2") do |config|
       }
 
       # Run jobs to make this into a web server.
-      chef.add_role "dsdev_standard_server"
+      chef.add_recipe "chef-dsdev-recipes::dsdev_standard_server"
 
     end
 
@@ -132,8 +130,6 @@ Vagrant.configure("2") do |config|
 
     dbdev.vm.provision :chef_solo do |chef|
 
-      chef.roles_path = './roles'
-
       # Data bag for configuring attributes for this node.
       chef.json = {
         :mysql => {
@@ -152,7 +148,7 @@ Vagrant.configure("2") do |config|
         }
       }
 
-      chef.add_role "dsdev_database_server"
+      chef.add_recipe "chef-dsdev-recipes::dsdev_database_server"
 
     end
 
