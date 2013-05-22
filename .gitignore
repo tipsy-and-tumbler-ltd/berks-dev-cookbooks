@@ -16,3 +16,4 @@ bin/*
 .chef
 cookbooks.tar.gz
 .DS_Store
+index.html
