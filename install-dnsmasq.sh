@@ -27,8 +27,9 @@ sudo echo "nameserver 127.0.0.1" > /etc/resolver/dsdev
 echo ":: Registering dnsmasq as a startup daemon..
 Your sudo password will be required."
 sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+# We will unload it, in case it was already installed and enabled.
+sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
-
 
 echo ":: You're all set!
 
