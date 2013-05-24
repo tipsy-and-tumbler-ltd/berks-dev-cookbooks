@@ -20,7 +20,8 @@ cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf
 echo "address=/$1.dsdev/33.33.33.10" >> /usr/local/etc/dnsmasq.conf
 # Make sure network uses the new nameserver
 sudo mkdir /etc/resolver
-sudo echo "nameserver 127.0.0.1" > /etc/resolver/dsdev.conf
+sudo touch /etc/resolver/dsdev
+sudo echo "nameserver 127.0.0.1" > /etc/resolver/dsdev
 
 # Make it load at start
 echo "Registering dnsmasq as a startup daemon..
