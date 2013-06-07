@@ -11,6 +11,9 @@ Vagrant.configure("2") do |config|
   # What extension to use. Should be initials.dsdev.
   developer_initials = 'dp'
 
+  # Recipe url to pull recipes for all boxes from.
+  global_recipe_url = "https://dl.dropboxusercontent.com/s/atke7sv3piimqc9/cookbooks-2.tar.gz?token_hash=AAHcCjLMhTsGfe8K9Uty6CLfTZIiinRjnHWZWzsCWb-u3A&dl=1"
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -89,7 +92,7 @@ Vagrant.configure("2") do |config|
     dsdev.vm.provision :chef_solo do |chef|
 
       # Grab cookbooks from a tarball on github.
-      chef.recipe_url = "https://dl.dropboxusercontent.com/s/atke7sv3piimqc9/cookbooks-2.tar.gz?token_hash=AAHcCjLMhTsGfe8K9Uty6CLfTZIiinRjnHWZWzsCWb-u3A&dl=1"
+      chef.recipe_url = global_recipe_url
 
       # Additional last-minute configuration
       chef.json = {
@@ -135,7 +138,7 @@ Vagrant.configure("2") do |config|
     dbdev.vm.provision :chef_solo do |chef|
 
       # Grab cookbooks from a tarball on github.
-      chef.recipe_url = "https://dl.dropboxusercontent.com/s/atke7sv3piimqc9/cookbooks-2.tar.gz?token_hash=AAHcCjLMhTsGfe8K9Uty6CLfTZIiinRjnHWZWzsCWb-u3A&dl=1"
+      chef.recipe_url = global_recipe_url
 
       # Data bag for configuring attributes for this node.
       chef.json = {
