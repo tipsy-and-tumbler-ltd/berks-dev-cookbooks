@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    dsdev.vm.network :private_network, ip: "33.33.33.10"
+    dsdev.vm.network :private_network, ip: "33.33.33.11"
 
     dsdev.vm.provision :chef_solo do |chef|
 
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
 
     server_extension = 'dbdev'
     dbdev.vm.hostname = server_extension
-    dbdev_ip = '33.33.33.40'
+    dbdev_ip = '33.33.33.41'
 
     # Every Vagrant virtual environment requires a box to build off of.
     #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
@@ -144,6 +144,7 @@ Vagrant.configure("2") do |config|
           }
         },
         :'chef-dsdev-database' => {
+          :db_address => dbdev_ip,
           :host_range => '33.33.33.%'
         }
       }
