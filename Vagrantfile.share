@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
     dsdev.vm.box = "quantal64-current"
     dsdev.vm.box_url = "https://dl.dropboxusercontent.com/s/bsg88foq47fkuk3/quantal64-vbox4.2.12-2013-05-22.box?token_hash=AAHe-O26g8FRqvshq4-Crqhv6RkK8icQ4bSBrZDMH2CMRw&dl=1"
 
-    # Assign this VM to a host-only network IP, allowing yousud to access it
+    # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
@@ -133,7 +133,7 @@ Vagrant.configure("2") do |config|
     dbdev.vm.box = "quantal64-current"
     dbdev.vm.box_url = "https://dl.dropboxusercontent.com/s/bsg88foq47fkuk3/quantal64-vbox4.2.12-2013-05-22.box?token_hash=AAHe-O26g8FRqvshq4-Crqhv6RkK8icQ4bSBrZDMH2CMRw&dl=1"
 
-    # Assign this VM to a host-only network IP, allowing yousud to access it
+    # Assign this VM to a host-only network IP, allowing you to access it
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
