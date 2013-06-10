@@ -84,7 +84,16 @@ Vagrant.configure("2") do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    dsdev.vm.network :private_network, ip: "33.33.33.11"
+    dsdev.vm.network :private_network,
+      ip: "33.33.33.11",
+      nic_type: 'virtio',
+      auto_config: true
+
+    # Workaround for above nic setting not working in 1.2.2
+    dsdev.vm.provider "virtualbox" do |v|
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
+      v.customize ['modifyvm', :id, '--nictype2', 'virtio']
+    end
 
     dsdev.vm.provision :chef_solo do |chef|
 
@@ -121,7 +130,16 @@ Vagrant.configure("2") do |config|
     # via the IP. Host-only networks can talk to the host machine as well as
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
-    dbdev.vm.network :private_network, ip: dbdev_ip
+    dbdev.vm.network :private_network,
+      ip: dbdev_ip,
+      nic_type: 'virtio',
+      auto_config: true
+
+    # Workaround for above nic setting not working in 1.2.2
+    dbdev.vm.provider "virtualbox" do |v|
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
+      v.customize ['modifyvm', :id, '--nictype2', 'virtio']
+    end
 
     # Choose a different password. Use https://www.grc.com/passwords.htm
     # and select from the alpha-numeric category (mysql doesn't always
