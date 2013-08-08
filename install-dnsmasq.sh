@@ -5,6 +5,10 @@ if [ ! $1 ]; then
 	echo >&2 "Pass the initials you want for your localhost address, ex: *.<your-initials>.dsdev."
   	exit 1;
 fi
+if [ ! $2 ]; then
+	echo >&2 "Pass the ip you want for your vagrant server."
+  	exit 1;
+fi
 
 # Check for existence/accessibility of mysql and sed
 echo ":: Checking dependencies.."
@@ -17,7 +21,7 @@ brew install dnsmasq
 echo ":: Configuring dnsmasq.."
 # Create config file
 cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf
-echo "address=/$1.dsdev/33.33.33.10" >> /usr/local/etc/dnsmasq.conf
+echo "address=/$1.dsdev/$2" >> /usr/local/etc/dnsmasq.conf
 # Make sure network uses the new nameserver
 sudo mkdir /etc/resolver
 sudo touch /etc/resolver/dsdev
@@ -33,5 +37,5 @@ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
 echo ":: You're all set!
 
-*.$1.dsdev will now point to your vagrant machine at 33.33.33.10.
+*.$1.dsdev will now point to your vagrant machine at $2.
 Edit /usr/local/etc/dnsmasq.conf if you need to make configuration adjustments."
