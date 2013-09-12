@@ -96,11 +96,11 @@ Vagrant.configure("2") do |config|
       nic_type: 'virtio',
       auto_config: true
 
-    # Workaround for above nic setting not working in 1.2.2
-    dsdev.vm.provider "virtualbox" do |v|
-      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
-      v.customize ['modifyvm', :id, '--nictype2', 'virtio']
-    end
+    # Workaround for above nic setting not working in Vagrant <1.3.0
+    # dsdev.vm.provider "virtualbox" do |v|
+    #   v.customize ['modifyvm', :id, '--nictype1', 'virtio']
+    #   v.customize ['modifyvm', :id, '--nictype2', 'virtio']
+    # end
 
     dsdev.vm.provision :chef_solo do |chef|
 
@@ -142,11 +142,11 @@ Vagrant.configure("2") do |config|
       nic_type: 'virtio',
       auto_config: true
 
-    # Workaround for above nic setting not working in 1.2.2
-    dbdev.vm.provider "virtualbox" do |v|
-      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
-      v.customize ['modifyvm', :id, '--nictype2', 'virtio']
-    end
+    # Workaround for above nic setting not working in Vagrant <1.3.0
+    # dsdev.vm.provider "virtualbox" do |v|
+    #   v.customize ['modifyvm', :id, '--nictype1', 'virtio']
+    #   v.customize ['modifyvm', :id, '--nictype2', 'virtio']
+    # end
 
     # Choose a different password. Use https://www.grc.com/passwords.htm
     # and select from the alpha-numeric category (mysql doesn't always
