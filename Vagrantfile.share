@@ -18,7 +18,17 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.synced_folder ".", "/var/www/", :nfs => true, id: "vagrant-root"
+  config.vm.synced_folder ".", "/var/www/",
+    id: "vagrant-root",
+    :nfs => {
+      # Guest OS NFS Options:
+      # The first option ignores file access time writes
+      # to speed up NFS. The second forces NFS to refresh
+      # its cache of files on every read, preventing an
+      # issue where the files sometimes get "stuck" on an
+      # old version compared to the Host's copy.
+      :mount_options   => ['noatime', 'cto']
+    }
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
