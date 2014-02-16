@@ -33,6 +33,8 @@ echo ":: Registering dnsmasq as a startup daemon..
 Your sudo password will be required."
 sudo cp -fv /usr/local/Cellar/dnsmasq/2.68/*.plist /Library/LaunchDaemons
 # We will unload it, in case it was already installed and enabled.
+# remember to edit the .plist file to change the location of the dnsmasq
+# i have put it /usr/local/bin/dnsmasq
 sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
